@@ -7,6 +7,47 @@
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
+    <header class="header">
+      <nav>
+        <button class="btn-date">Calculate date</button>
+        <button class="btn-holiday">Calculate holiday</button>
+      </nav>
+    </header>
+    <main class="hero">
+      <section class="hero__date">
+        <label for="start-date">Enter start date</label>
+        <input type="date" name="start-date" id="start-date" />
+        <label for="end-date">Enter end date</label>
+        <input type="date" name="end-date" id="end-date" />
+        <div class="button-container">
+          <button class="add-period" data-days="7">Add week</button>
+          <button class="add-period" data-days="30">Add month</button>
+        </div>
+        <div>
+          <label for="day-select">Сhoose options:</label>
+          <select name="day-select" id="day-select">
+            <option value="">--Please choose an option--</option>
+            <option value="days">All days</option>
+            <option value="weekdays">Weekdays</option>
+            <option value="weekends">Weekends</option>
+          </select>
+        </div>
+        <div>
+          <label for="duration-select">Сhoose options:</label>
+          <select name="duration-select" id="duration-select">
+            <option value="">--Please choose an option--</option>
+            <option value="days">days</option>
+            <option value="hours">hours</option>
+            <option value="minutes">minutes</option>
+            <option value="seconds">seconds</option>
+          </select>
+        </div>
+        <div class="count-block">
+          <button class="count">Calculate</button>
+        </div>
+        <div class="hero-result"></div>
+      </section>
+    </main>
     <script src="./js/script.js"></script>
   </body>
 </html>
