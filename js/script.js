@@ -30,7 +30,6 @@ function handleEndDateChange() {
 // Функція яка додає вказану кількість днів до дати
 function addTimePeriod(days) {
   if (!startDateInput.value) {
-    alert("Будь ласка, спочатку виберіть початкову дату.");
     return;
   }
 
