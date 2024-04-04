@@ -4,11 +4,12 @@
 
 const startDateInput = document.getElementById("start-date");
 const endDateInput = document.getElementById("end-date");
-const addPeriodButtonContainer = document.querySelector(".button-container");
-const countButton = document.querySelector(".count");
+const addWeekButton = document.getElementById("add-week");
+const addMonthButton = document.getElementById("add-month");
+const dayType = document.getElementById("day-select");
+const durationType = document.getElementById("duration-select");
+const calculateButton = document.querySelector(".count");
 const resultDiv = document.querySelector(".hero-result");
-const daySelect = document.getElementById("day-select");
-const durationSelect = document.getElementById("duration-select");
 
 // LocalStorage
 
@@ -27,34 +28,117 @@ function handleEndDateChange() {
   }
 }
 
+// Функція для приведення дати до одного формату
+function formatDateToISO(date) {
+  return date.toISOString().split("T")[0];
+}
+
 // Функція яка додає вказану кількість днів до дати
-function addTimePeriod(days) {
+function addDays(event) {
+  const preset = event.target.dataset.preset;
+  let daysToAdd;
+
+  switch (preset) {
+    case "week":
+      daysToAdd = 7;
+      break;
+    case "month":
+      daysToAdd = 30;
+      break;
+  }
+
   if (!startDateInput.value) {
+    const today = new Date();
+    startDateInput.value = formatDateToISO(today);
+  }
+
+  let baseDate = new Date(startDateInput.value);
+  baseDate.setDate(baseDate.getDate() + daysToAdd);
+
+  endDateInput.value = formatDateToISO(baseDate);
+}
+
+// Функція для підрахунку всіх днів
+function countAllDays(startDate, endDate) {
+  let duration = 0;
+  while (startDate < endDate) {
+    duration++;
+    startDate.setDate(startDate.getDate() + 1);
+  }
+  return duration;
+}
+
+// Функція для підрахунку будніх днів
+function countWeekdays(startDate, endDate) {
+  let duration = 0;
+  while (startDate < endDate) {
+    if (startDate.getDay() !== 0 && startDate.getDay() !== 6) {
+      duration++;
+    }
+    startDate.setDate(startDate.getDate() + 1);
+  }
+  return duration;
+}
+
+// Функція для підрахунку вихідних днів
+function countWeekends(startDate, endDate) {
+  let duration = 0;
+  while (startDate < endDate) {
+    if (startDate.getDay() === 0 || startDate.getDay() === 6) {
+      duration++;
+    }
+    startDate.setDate(startDate.getDate() + 1);
+  }
+  return duration;
+}
+
+// Функція для розрахунку тривалості
+function calculateDuration() {
+  const dayTypeValue = dayType.value;
+  const durationTypeValue = durationType.value;
+
+  if (!startDateInput.value || !endDateInput.value) {
     return;
   }
 
-  let date = new Date(startDateInput.value);
+  let startDate = new Date(startDateInput.value);
+  let endDate = new Date(endDateInput.value);
+  let duration;
 
-  if (endDateInput.value) {
-    date = new Date(endDateInput.value);
+  switch (dayTypeValue) {
+    case "days":
+      duration = countAllDays(new Date(startDate), new Date(endDate));
+      break;
+    case "weekdays":
+      duration = countWeekdays(new Date(startDate), new Date(endDate));
+      break;
+    case "weekends":
+      duration = countWeekends(new Date(startDate), new Date(endDate));
+      break;
   }
 
-  date.setDate(date.getDate() + days);
-  endDateInput.value = date.toISOString().split("T")[0];
+  duration = convertDuration(duration, durationTypeValue);
+
+  console.log(`Total ${durationTypeValue}: ${duration}`);
 }
 
-// Функція для обробки кліку в межах контейнера
-function handleAddPeriodClick(event) {
-  if (event.target.classList.contains("add-period")) {
-    if (!startDateInput.value) {
-      return;
-    }
-    const days = parseInt(event.target.getAttribute("data-days"), 10);
-    addTimePeriod(days);
+// Функція для конвертації тривалості в обрану одиницю
+function convertDuration(duration, durationTypeValue) {
+  switch (durationTypeValue) {
+    case "hours":
+      return duration * 24;
+    case "minutes":
+      return duration * 24 * 60;
+    case "seconds":
+      return duration * 24 * 60 * 60;
+    default:
+      return duration;
   }
 }
 
 // Додавання EventListener
 startDateInput.addEventListener("input", handleStartDateChange);
 endDateInput.addEventListener("input", handleEndDateChange);
-addPeriodButtonContainer.addEventListener("click", handleAddPeriodClick);
+addWeekButton.addEventListener("click", addDays);
+addMonthButton.addEventListener("click", addDays);
+calculateButton.addEventListener("click", calculateDuration);

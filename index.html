@@ -5,42 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DateApp</title>
     <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assets/calculator.png"
+      sizes="32x32"
+    />
   </head>
   <body>
     <header class="header">
       <nav>
+        <img src="./assets/calculator.png" />
         <button class="btn-date">Calculate date</button>
         <button class="btn-holiday">Calculate holiday</button>
       </nav>
     </header>
     <main class="hero">
       <section class="hero__date">
-        <label for="start-date">Enter start date</label>
-        <input type="date" name="start-date" id="start-date" />
-        <label for="end-date">Enter end date</label>
-        <input type="date" name="end-date" id="end-date" />
+        <div class="hero__input">
+          <label for="start-date">Enter start date</label>
+          <input type="date" name="start-date" id="start-date" required />
+          <label for="end-date" class="end-label">Enter end date</label>
+          <input type="date" name="end-date" id="end-date" />
+        </div>
         <div class="button-container">
-          <button class="add-period" data-days="7">Add week</button>
-          <button class="add-period" data-days="30">Add month</button>
+          <button id="add-week" data-preset="week">Add week</button>
+          <button id="add-month" data-preset="month">Add month</button>
         </div>
-        <div>
-          <label for="day-select">Сhoose options:</label>
-          <select name="day-select" id="day-select">
-            <option value="">--Please choose an option--</option>
-            <option value="days">All days</option>
-            <option value="weekdays">Weekdays</option>
-            <option value="weekends">Weekends</option>
-          </select>
-        </div>
-        <div>
-          <label for="duration-select">Сhoose options:</label>
-          <select name="duration-select" id="duration-select">
-            <option value="">--Please choose an option--</option>
-            <option value="days">days</option>
-            <option value="hours">hours</option>
-            <option value="minutes">minutes</option>
-            <option value="seconds">seconds</option>
-          </select>
+        <div class="hero__select">
+          <div class="hero__select-item">
+            <label for="day-select">Сhoose days:</label>
+            <select name="day-select" id="day-select">
+              <option value="">--Please choose an option--</option>
+              <option value="days">All days</option>
+              <option value="weekdays">Weekdays</option>
+              <option value="weekends">Weekends</option>
+            </select>
+          </div>
+          <div>
+            <label for="duration-select">Count the number:</label>
+            <select name="duration-select" id="duration-select">
+              <option value="">--Please choose an option--</option>
+              <option value="days">days</option>
+              <option value="hours">hours</option>
+              <option value="minutes">minutes</option>
+              <option value="seconds">seconds</option>
+            </select>
+          </div>
         </div>
         <div class="count-block">
           <button class="count">Calculate</button>
