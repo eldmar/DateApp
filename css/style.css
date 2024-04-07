@@ -6,6 +6,7 @@
   --clr-btn: #d8c3a5;
   --clr-grey: #8e8d8a;
   --clr-orange: #e85a4f;
+  --clr-hover: #f0d266;
 
   --ff-main: "Gluten", cursive;
 }
@@ -16,7 +17,8 @@
 }
 
 body {
-  margin: 0 auto;
+  margin: 10px auto;
+  padding: 0 20px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,10 +37,15 @@ button {
   text-transform: uppercase;
   cursor: pointer;
   border: 3px black solid;
+  transition: background-color 0.16s ease-in;
+}
+button:hover {
+  background-color: var(--clr-hover);
 }
 button:active {
-  background-color: #e85a4f;
+  background-color: var(--clr-orange);
 }
+
 .header {
   display: flex;
   justify-content: center;
@@ -80,13 +87,14 @@ input[type="date"] {
 }
 .hero {
   max-height: 20rem;
+  min-height: 18.75rem;
   border-radius: 16px;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: #e98074;
+  background-color: var(--clr-text);
   box-shadow: 10px 10px 10px -2px rgba(46, 74, 117, 1);
 }
 
@@ -95,9 +103,7 @@ input[type="date"] {
   padding: 30px 0;
 }
 select {
-  width: 100%;
   min-width: 15ch;
-  max-width: 30ch;
   border: 2px solid black;
   border-radius: 0.25em;
   padding: 0.25em 0.5em;
@@ -110,4 +116,22 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 2.1875rem;
+}
+.hero__result {
+  width: 100%;
+  max-height: 100%;
+  /* background-color: var(--clr-text); */
+  margin: 20px 0;
+  border-radius: 16px;
+}
+.result-list {
+  list-style: none;
+}
+.result-list li {
+  padding: 10px 20px;
+  text-align: center;
+}
+.result-list li:not(:last-child) {
+  border-bottom: 2px solid var(--clr-grey);
 }

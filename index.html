@@ -36,16 +36,16 @@
           <div class="hero__select-item">
             <label for="day-select">Сhoose days:</label>
             <select name="day-select" id="day-select">
-              <option value="">--Please choose an option--</option>
+              <!-- <option value="">--Please choose an option--</option> -->
               <option value="days">All days</option>
               <option value="weekdays">Weekdays</option>
               <option value="weekends">Weekends</option>
             </select>
           </div>
-          <div>
+          <div class="hero__select-item">
             <label for="duration-select">Count the number:</label>
             <select name="duration-select" id="duration-select">
-              <option value="">--Please choose an option--</option>
+              <!-- <option value="">--Please choose an option--</option> -->
               <option value="days">days</option>
               <option value="hours">hours</option>
               <option value="minutes">minutes</option>
@@ -56,9 +56,11 @@
         <div class="count-block">
           <button class="count">Calculate</button>
         </div>
-        <div class="hero-result"></div>
       </section>
     </main>
-    <script src="./js/script.js"></script>
+    <div class="hero__result">
+      <ul class="result-list"></ul>
+    </div>
+    <script src="./js/index.js" type="module"></script>
   </body>
 </html>
