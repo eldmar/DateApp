@@ -17,8 +17,8 @@
 }
 
 body {
-  margin: 10px auto;
-  padding: 0 20px;
+  margin: 0 auto;
+  padding: 0 10px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -59,14 +59,15 @@ button:active {
 }
 nav > button {
   height: 50px;
-  width: 300px;
-  margin-left: 20px;
+  min-width: 300px;
+  width: 100%;
   font-size: 1.2rem;
 }
 nav {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 }
 
 input[type="date"] {
@@ -86,8 +87,6 @@ input[type="date"] {
   width: 64px;
 }
 .hero {
-  max-height: 20rem;
-  min-height: 18.75rem;
   border-radius: 16px;
   width: 100%;
   height: 100%;
@@ -98,9 +97,12 @@ input[type="date"] {
   box-shadow: 10px 10px 10px -2px rgba(46, 74, 117, 1);
 }
 
-.hero__input,
-.hero__select {
-  padding: 30px 0;
+.hero__input {
+  padding: 20px;
+  display: flex;
+}
+.hero__date {
+  padding: 20px;
 }
 select {
   min-width: 15ch;
@@ -117,6 +119,7 @@ select {
   justify-content: center;
   align-items: center;
   gap: 2.1875rem;
+  padding: 30px 0;
 }
 .hero__result {
   width: 100%;
@@ -134,4 +137,60 @@ select {
 }
 .result-list li:not(:last-child) {
   border-bottom: 2px solid var(--clr-grey);
+}
+
+@media (max-width: 830px) {
+  .header {
+    min-height: 150px;
+    justify-content: space-around;
+  }
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 750px) {
+}
+@media (max-width: 500px) {
+  nav > button {
+    min-width: 50px;
+  }
+  .hero__input {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hero__input-item,
+  .hero__select-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .button-container,
+  .count-block {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .end-label {
+    margin-left: 0px;
+  }
+  .header {
+    margin: 10px 0;
+    padding: 15px;
+  }
+  .hero__select {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  select {
+    min-width: 10px;
+  }
+}
+@media (max-width: 330px) {
+  .button-container {
+    flex-direction: column;
+  }
 }
