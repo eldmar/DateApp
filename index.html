@@ -5,8 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DateApp</title>
     <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assets/calculator.png"
+      sizes="32x32"
+    />
   </head>
   <body>
-    <script src="./js/script.js"></script>
+    <header class="header">
+      <img src="./assets/calculator.png" />
+      <nav>
+        <button class="btn-date">Calculate date</button>
+        <button class="btn-holiday">Calculate holiday</button>
+      </nav>
+    </header>
+    <main class="hero">
+      <section class="hero__date">
+        <div class="hero__input">
+          <div class="hero__input-item">
+            <label for="start-date">Enter start date</label>
+            <input type="date" name="start-date" id="start-date" required />
+          </div>
+          <div class="hero__input-item">
+            <label for="end-date" class="end-label">Enter end date</label>
+            <input type="date" name="end-date" id="end-date" />
+          </div>
+        </div>
+        <div class="button-container">
+          <button id="add-week" data-preset="week">Add week</button>
+          <button id="add-month" data-preset="month">Add month</button>
+        </div>
+        <div class="hero__select">
+          <div class="hero__select-item">
+            <label for="day-select">Сhoose days:</label>
+            <select name="day-select" id="day-select">
+              <!-- <option value="">--Please choose an option--</option> -->
+              <option value="days">All days</option>
+              <option value="weekdays">Weekdays</option>
+              <option value="weekends">Weekends</option>
+            </select>
+          </div>
+          <div class="hero__select-item">
+            <label for="duration-select">Count the number:</label>
+            <select name="duration-select" id="duration-select">
+              <!-- <option value="">--Please choose an option--</option> -->
+              <option value="days">days</option>
+              <option value="hours">hours</option>
+              <option value="minutes">minutes</option>
+              <option value="seconds">seconds</option>
+            </select>
+          </div>
+        </div>
+        <div class="count-block">
+          <button class="count">Calculate</button>
+        </div>
+      </section>
+    </main>
+    <div class="hero__result">
+      <ul class="result-list"></ul>
+    </div>
+    <script src="./js/index.js" type="module"></script>
   </body>
 </html>
