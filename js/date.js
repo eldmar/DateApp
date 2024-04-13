@@ -1,5 +1,3 @@
-import { convertDuration } from "./helper.js";
-
 // Функція для підрахунку всіх днів
 export function countAllDays(startDate, endDate) {
   let duration = 0;
@@ -54,4 +52,23 @@ export function calculateDuration(startDate, endDate, dayType, durationType) {
       break;
   }
   return convertDuration(duration, durationType);
+}
+
+// Функція для приведення дати до одного формату
+export function formatDateToISO(date) {
+  return date.toISOString().split("T")[0];
+}
+
+// Функція для конвертації тривалості в обрану одиницю
+function convertDuration(duration, durationTypeValue) {
+  switch (durationTypeValue) {
+    case "hours":
+      return duration * 24;
+    case "minutes":
+      return duration * 24 * 60;
+    case "seconds":
+      return duration * 24 * 60 * 60;
+    default:
+      return duration;
+  }
 }
