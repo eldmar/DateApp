@@ -60,7 +60,7 @@
         <div class="count-block">
           <button class="count">Calculate</button>
         </div>
-        <div class="hero__result">
+        <div class="hero__result-date">
           <ul class="result-list"></ul>
         </div>
       </section>
@@ -69,15 +69,20 @@
         <div class="hero__holiday-wrap">
           <div class="select-country">
             <label for="country">Selct country</label>
-            <select name="country" id="country"></select>
+            <select name="country" id="country">
+              <option value="">Select country</option>
+            </select>
           </div>
           <div class="select-year">
             <label for="year">Select year</label>
-            <select name="year" id="year"></select>
+            <select name="year" id="year" disabled></select>
           </div>
         </div>
         <div class="btn-container">
           <button class="btn-display">Display</button>
+        </div>
+        <div class="result-container">
+          <ul class="holiday-list"></ul>
         </div>
       </section>
     </main>

@@ -21,6 +21,8 @@ const tabHoliday = document.querySelector(".hero__holiday");
 
 const countrySelect = document.getElementById("country");
 const yearSelect = document.getElementById("year");
+const holidayList = document.querySelector(".holiday-list");
+const displayButton = document.querySelector(".btn-display");
 
 async function getCountries() {
   try {
@@ -28,8 +30,10 @@ async function getCountries() {
     if (!response.ok) {
       throw new Error(`Помилка завантаженя: ${response.status}`);
     }
-    const data = await response.json();
-    displayCountries(data.response.countries);
+    const {
+      response: { countries },
+    } = await response.json();
+    return countries;
   } catch (error) {}
 }
 
@@ -41,18 +45,45 @@ async function getHolidays(country, year) {
     if (!response.ok) {
       throw new Error(`Помилка завантаженя: ${response.status}`);
     }
-    const data = await response.json();
-    displayHolidays(data.response.holidays);
+    const {
+      response: { holidays },
+    } = await response.json();
+    return holidays;
   } catch (error) {}
 }
-function displayHolidays() {}
 
-function displayCountries(countries) {
-  countrySelect.innerHTML = '<option value="">Select country</option>';
-  countries.forEach((country) => {
-    let option = new Option(country.country_name, country["iso-3166"]);
-    countrySelect.appendChild(option);
-  });
+async function displayHolidays() {
+  try {
+    const countryValue = countrySelect.value;
+    const yearValue = yearSelect.value;
+
+    if (!countryValue || !yearValue) {
+      throw new Error("Країна чи рік не обрано!");
+    }
+
+    const holidays = await getHolidays(countryValue, yearValue);
+
+    holidayList.innerHTML = `<li class="header-item"><span>Date</span><span>Holiday</span></li>`;
+
+    holidays.forEach((holiday) => {
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `<span>${
+        holiday.date.iso.split("T")[0]
+      }</span>  <span>${holiday.name}</span>`;
+      holidayList.appendChild(listItem);
+    });
+  } catch (error) {}
+}
+
+async function displayCountries() {
+  try {
+    const countries = await getCountries();
+
+    countries.forEach((country) => {
+      let option = new Option(country.country_name, country["iso-3166"]);
+      countrySelect.appendChild(option);
+    });
+  } catch {}
 }
 
 function displayYears() {
@@ -63,8 +94,15 @@ function displayYears() {
   yearSelect.value = new Date().getFullYear();
 }
 
-getCountries();
-displayYears();
+function initTab() {
+  getCountries();
+  displayYears();
+  displayCountries();
+}
+
+function changeDisabled() {
+  yearSelect.removeAttribute("disabled");
+}
 
 // Функція переключення активної таби
 const activateDateTab = () => {
@@ -166,3 +204,6 @@ addMonthButton.addEventListener("click", addDays);
 calculateButton.addEventListener("click", handleCalculateClick);
 btnDate.addEventListener("click", activateDateTab);
 btnHoliday.addEventListener("click", activateHolidayTab);
+btnHoliday.addEventListener("click", initTab);
+countrySelect.addEventListener("change", changeDisabled);
+displayButton.addEventListener("click", displayHolidays);
