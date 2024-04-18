@@ -186,7 +186,41 @@ li > span {
   color: black;
   font-size: 1.5rem;
 }
+.date-span::after {
+  content: "";
+  display: block;
+  background-image: url(../assets/arrow-up.png);
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  float: right;
+  margin: 0 6px;
+  cursor: pointer;
+  transform: rotate(180deg);
+}
+.date-span.rotate::after {
+  transform: rotate(360deg);
+}
 
+.header-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.error-message {
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  color: red;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid red;
+  background-color: #ffd2d2;
+  border-radius: 16px;
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
 @media (max-width: 830px) {
   .header {
     min-height: 150px;

@@ -1,9 +1,8 @@
 import { getResultsFromStorage, storeResultInStorage } from "./storage.js";
 import { calculateDuration, formatDateToISO } from "./date.js";
+import { getCountries, getHolidays } from "./api.js";
 
 // Оголошення змінних
-const API_KEY = "CfMigfl9ufpty0yl6FPJhdkNEOHLv8ZQ";
-const API_URL = "https://calendarific.com/api/v2";
 
 const addWeekButton = document.getElementById("add-week");
 const addMonthButton = document.getElementById("add-month");
@@ -23,56 +22,62 @@ const countrySelect = document.getElementById("country");
 const yearSelect = document.getElementById("year");
 const holidayList = document.querySelector(".holiday-list");
 const displayButton = document.querySelector(".btn-display");
+const sortDate = document.querySelector(".date-span");
+const resultContainer = document.querySelector(".result-container");
+const errorContainer = document.querySelector(".error-message");
 
-async function getCountries() {
-  try {
-    const response = await fetch(`${API_URL}/countries?api_key=${API_KEY}`);
-    if (!response.ok) {
-      throw new Error(`Помилка завантаженя: ${response.status}`);
-    }
-    const {
-      response: { countries },
-    } = await response.json();
-    return countries;
-  } catch (error) {}
-}
-
-async function getHolidays(country, year) {
-  try {
-    const response = await fetch(
-      `${API_URL}/holidays?api_key=${API_KEY}&country=${country}&year=${year}`
-    );
-    if (!response.ok) {
-      throw new Error(`Помилка завантаженя: ${response.status}`);
-    }
-    const {
-      response: { holidays },
-    } = await response.json();
-    return holidays;
-  } catch (error) {}
-}
+let sortAscending = true;
+let holidays = [];
 
 async function displayHolidays() {
   try {
     const countryValue = countrySelect.value;
     const yearValue = yearSelect.value;
-
+    resultContainer.classList.remove("hidden");
+    errorContainer.classList.add("hidden");
+    sortAscending = true;
+    sortDate.classList.remove("rotate");
     if (!countryValue || !yearValue) {
       throw new Error("Країна чи рік не обрано!");
     }
 
-    const holidays = await getHolidays(countryValue, yearValue);
+    const retrievedHolidays = await getHolidays(countryValue, yearValue);
 
-    holidayList.innerHTML = `<li class="header-item"><span>Date</span><span>Holiday</span></li>`;
+    holidays = retrievedHolidays.map((holiday) => ({
+      date: new Date(holiday.date.iso.split("T")[0]),
+      name: holiday.name,
+    }));
 
-    holidays.forEach((holiday) => {
-      const listItem = document.createElement("li");
-      listItem.innerHTML = `<span>${
-        holiday.date.iso.split("T")[0]
-      }</span>  <span>${holiday.name}</span>`;
-      holidayList.appendChild(listItem);
-    });
-  } catch (error) {}
+    renderHolidays();
+  } catch (error) {
+    console.error("Failed to fetch holidays:", error);
+    resultContainer.classList.add("hidden");
+
+    errorContainer.textContent = `Помилка: ${error.message}`;
+    errorContainer.classList.remove("hidden");
+  }
+}
+function renderHolidays() {
+  holidayList.innerHTML = "";
+
+  holidays.forEach((holiday) => {
+    const listItem = document.createElement("li");
+    listItem.innerHTML = `<span>${
+      holiday.date.toISOString().split("T")[0]
+    }</span> <span>${holiday.name}</span>`;
+    holidayList.appendChild(listItem);
+  });
+}
+
+function sortHoliday() {
+  sortAscending = !sortAscending;
+
+  holidays.sort((a, b) => {
+    return sortAscending ? a.date - b.date : b.date - a.date;
+  });
+
+  renderHolidays();
+  sortDate.classList.toggle("rotate");
 }
 
 async function displayCountries() {
@@ -83,7 +88,12 @@ async function displayCountries() {
       let option = new Option(country.country_name, country["iso-3166"]);
       countrySelect.appendChild(option);
     });
-  } catch {}
+  } catch (error) {
+    console.error("Failed to fetch holidays:", error);
+    resultContainer.classList.add("hidden");
+    errorContainer.textContent = `Помилка: ${error.message}`;
+    errorContainer.classList.remove("hidden");
+  }
 }
 
 function displayYears() {
@@ -94,16 +104,15 @@ function displayYears() {
   yearSelect.value = new Date().getFullYear();
 }
 
+function changeDisabled() {
+  yearSelect.removeAttribute("disabled");
+}
+
 function initTab() {
   getCountries();
   displayYears();
   displayCountries();
 }
-
-function changeDisabled() {
-  yearSelect.removeAttribute("disabled");
-}
-
 // Функція переключення активної таби
 const activateDateTab = () => {
   btnDate.classList.add("btn-active");
@@ -207,3 +216,4 @@ btnHoliday.addEventListener("click", activateHolidayTab);
 btnHoliday.addEventListener("click", initTab);
 countrySelect.addEventListener("change", changeDisabled);
 displayButton.addEventListener("click", displayHolidays);
+sortDate.addEventListener("click", sortHoliday);
