@@ -38,7 +38,7 @@ async function displayHolidays() {
     sortAscending = true;
     sortDate.classList.remove("rotate");
     if (!countryValue || !yearValue) {
-      throw new Error("Країна чи рік не обрано!");
+      throw new Error("Країна не обрана!");
     }
 
     const retrievedHolidays = await getHolidays(countryValue, yearValue);

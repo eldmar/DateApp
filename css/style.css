@@ -141,6 +141,12 @@ select {
   margin: 20px 0;
   border-radius: 16px;
 }
+.hero__input-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 .result-list,
 .holiday-list {
   list-style: none;
@@ -173,6 +179,7 @@ li > span {
   align-items: center;
   justify-content: space-around;
   gap: 2.5rem;
+  padding: 10px;
 }
 .btn-container {
   width: 100%;
@@ -185,6 +192,7 @@ li > span {
 .holiday-list .header-item {
   color: black;
   font-size: 1.5rem;
+  padding: 0 10px;
 }
 .date-span::after {
   content: "";
@@ -205,6 +213,10 @@ li > span {
 .header-item {
   display: flex;
   justify-content: space-between;
+}
+.header-container {
+  padding: 0 20px 20px;
+  font-size: 24px;
 }
 
 .error-message {
@@ -232,12 +244,16 @@ li > span {
   }
 }
 
-@media (max-width: 750px) {
-}
-@media (max-width: 500px) {
+@media (max-width: 590px) {
+  .hero__holiday-wrap {
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+  }
   nav > button {
     min-width: 50px;
   }
+
   .hero__input {
     flex-direction: column;
     gap: 10px;
@@ -274,5 +290,14 @@ li > span {
 @media (max-width: 330px) {
   .button-container {
     flex-direction: column;
+  }
+  .select-year,
+  .select-country {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .header-container {
+    justify-content: space-around;
   }
 }
