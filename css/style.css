@@ -171,6 +171,12 @@ li > span {
 .holiday-list li:not(:last-child) {
   border-bottom: 1px solid var(--clr-bg);
 }
+#duration-select,
+#day-select {
+  padding: 8px;
+
+  text-align: center;
+}
 
 /* TAB HOLIDAY START */
 
